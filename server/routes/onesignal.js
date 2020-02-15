@@ -9,8 +9,6 @@ const client = new OneSignal.Client(process.env.APP_ID, process.env.API_KEY);
 app.post('/createNotification', (req, res) => {
 
     let notification = req.body
-
-
     client.createNotification(notification)
         .then(response => {
             return res.status(202).json({
@@ -42,9 +40,21 @@ app.get('/viewDevices', (req, res) => {
 })
 
 
+
+
+app.get('/viewNotifications', async (req, res) => {
+    const response = await client.viewNotifications();
+    //const response = await client.viewNotifications({ limit: 10, kind: 2, offset: 2 });
+
+    return res.status(202).json({
+        status: true,
+        response: response.body
+    })
+})
+
 // app.post('/cancelNotification', (req, res) => { })
 
-// app.post('/viewNotifications', (req, res) => { })
+
 
 
 // app.post('/addDevice', (req, res) => { })
